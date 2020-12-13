@@ -93,7 +93,7 @@ export function GameHelper_DoesOwnFigurBlock(game, player, figur, ergebnis) {
 		if (figur2 != figur) {
 			const Position2 = GameHelper_PositionConvert(player, game.GetPosition(player, figur2));
 
-			if (Position == Position2) return true; // Position passt zu Position2 . Blockiert!
+			if (Position == Position2) return true; // Position passt zu Position2. Blockiert!
 		}
 	}
 
@@ -274,15 +274,12 @@ export function GameHelper_CanMove(game, player, figur, ergebnis) {
 		if (ergebnis == 6) {
 			const TempPos = GameHelper_PositionConvert(player, game.GetPosition(player, figur) + 1);
 
-			/* Überprüfe für alle Figuren aller Spielers. */
-			for (let player2 = 0; player2 < game.GetPlayerAmount(); player2++) {
-				for (let figur2 = 0; figur2 < game.GetFigurAmount(); figur2++) {
+			/* Überprüfe für alle Figuren. */
+			for (let figur2 = 0; figur2 < game.GetFigurAmount(); figur2++) {
+				if (figur2 != figur) { // Überprüfe nicht die aktuell benutzte Figur!
+					const Position = GameHelper_PositionConvert(player, game.GetPosition(player, figur2));
 
-					if (player2 != player && figur2 != figur) { // Überprüfe nicht die aktuell benutzte Figur!
-						const Position = GameHelper_PositionConvert(player2, game.GetPosition(player2, figur2));
-
-						if (TempPos == Position) return false; // TempPos passt zu Position . Blockiert!
-					}
+					if (TempPos == Position) return false; // TempPos passt zu Position. Blockiert!
 				}
 			}
 
@@ -298,15 +295,11 @@ export function GameHelper_CanMove(game, player, figur, ergebnis) {
 		const Position = GameHelper_PositionConvert(player, game.GetPosition(player, figur) + ergebnis);
 
 		/* Überprüfe außerhalb des Hauses. */
-		for (let player2 = 0; player2 < game.GetPlayerAmount(); player2++) {
-			for (let figur2 = 0; figur2 < game.GetFigurAmount(); figur2++) {
+		for (let figur2 = 0; figur2 < game.GetFigurAmount(); figur2++) {
+			if (figur2 != figur) { // Überprüfe nicht die aktuell benutzte Figur!
+				const Position2 = GameHelper_PositionConvert(player, game.GetPosition(player, figur2));
 
-				if (player2 != player && figur2 != figur) { // Überprüfe nicht die aktuell benutzte Figur!
-
-					const Position2 = GameHelper_PositionConvert(player2, game.GetPosition(player2, figur2));
-
-					if (Position == Position2) return false; // Position passt zu Position2 . Blockiert!
-				}
+				if (Position == Position2) return false; // Position passt zu Position2. Blockiert!
 			}
 		}
 
@@ -319,7 +312,6 @@ export function GameHelper_CanMove(game, player, figur, ergebnis) {
 
 		for (let figur2 = 0; figur2 < game.GetFigurAmount(); figur2++) {
 			if (figur2 != figur) {
-
 				const Position2 = game.GetPosition(player, figur2);
 
 				if (Position2 == Position) return false; // Position bereits benutzt.

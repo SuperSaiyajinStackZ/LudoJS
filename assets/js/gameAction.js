@@ -25,7 +25,7 @@
 */
 
 import { LudoGame } from './core/game.js';
-import { GameHelper_CanMove, GameHelper_DoesOwnFigurBlock, GameHelper_MarkAsDone, GameHelper_AdditionalDoneCheck } from './core/gameHelper.js';
+import { GameHelper_CanMove, GameHelper_DoesOwnFigurBlock, GameHelper_MarkAsDone, GameHelper_AdditionalDoneCheck, GameHelper_KickAction } from './core/gameHelper.js';
 
 /*
 	Gehe zur nächsten Figur, falls verfügbar.
@@ -84,6 +84,10 @@ export function GameAction_Play(Game) {
 			if (!GameHelper_DoesOwnFigurBlock(Game, Game.GetCurrentPlayer(), Game.GetSelectedFigur(), 1)) {
 				Game.SetPosition(Game.GetCurrentPlayer(), Game.GetSelectedFigur(), 1);
 				Game.SetCanContinue(true);
+
+				/* Führe die Kick Aktion aus. */
+				GameHelper_KickAction(Game, Game.GetCurrentPlayer(), Game.GetSelectedFigur());
+
 				return true;
 
 			} else {
@@ -100,6 +104,9 @@ export function GameAction_Play(Game) {
 			if (!GameHelper_DoesOwnFigurBlock(Game, Game.GetCurrentPlayer(), Game.GetSelectedFigur(), Game.GetErgebnis())) {
 				Game.SetPosition(Game.GetCurrentPlayer(), Game.GetSelectedFigur(), position + Game.GetErgebnis());
 				GameHelper_MarkAsDone(Game, Game.GetCurrentPlayer(), Game.GetSelectedFigur());
+
+				/* Führe die Kick Aktion aus. */
+				GameHelper_KickAction(Game, Game.GetCurrentPlayer(), Game.GetSelectedFigur());
 
 				for (let i = 0; i < Game.GetFigurAmount(); i++) {
 					GameHelper_AdditionalDoneCheck(Game, Game.GetCurrentPlayer(), i);
