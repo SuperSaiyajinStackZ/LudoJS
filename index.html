@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,maximum-scale=2">
+	<title>LudoJS - SuperSaiyajinStackZ</title>
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script type="module" src="assets/js/core/game.js"></script>
+	<script type="module" src="assets/js/core/coreHelper.js"></script>
+	<script type="module" src="assets/js/main.js"></script>
+</head>
+
+<body>
+	<main>
+		<!-- Spiel Vorbereitung. -->
+		<div id="GamePrepare">
+			<div id="UIStyle">
+				<img id="LudoBanner" src="assets/images/banner.png">
+				<table>
+					<tr>
+						<td><button id="GameStart">Start Game!</button></td>
+					</tr>
+					<tr>
+						<td><label for="PlayerAmount">Player Amount: </label><input type="number" min="2" max="4" id="PlayerAmount" value="2"></td>
+					</tr>
+					<tr>
+						<td><label for="FigurAmount">Figure Amount: </label><input type="number" min="1" max="4" id="FigurAmount" value="1"></td>
+					</tr>
+					<tr>
+						<td><h2 id="LoadingText" class="showNone">Preparing your game...</h2></td>
+					</tr>
+				</table>
+
+				<p>Copyright (C) 2020 SuperSaiyajinStackZ. You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a></p> <!-- Copyright Notiz. -->
+			</div>
+		</div>
+
+		<!-- Spiel Geschehen. -->
+		<div id="GamePlay" class="showNone">
+			<canvas id="GameField" width="210" height="210"></canvas>
+			<label for="CurrentPlayer">Current Player: </label><b id="CurrentPlayer"></b>
+			<canvas id="Dice" width="80" height="80" class="d-none"></canvas>
+
+			<!-- Würfel Rollen Button. -->
+			<div id="DiceRoll">
+				<button id="RollDice">Roll Dice!</button>
+			</div>
+
+			<!-- Figuren Selektion. -->
+			<div id="FigureSelection" class="showNone">
+				<button id="PreviousFigur">Previous Figur</button>
+				<button id="PlayFigur">Play Figur</button>
+				<button id="NextFigur">Next Figur</button>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
