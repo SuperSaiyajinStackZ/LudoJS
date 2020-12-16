@@ -30,6 +30,9 @@ import { LudoGame } from './core/game.js';
 let Game, alreadyLoaded = false;
 
 document.getElementById("GameStart").onclick = () => Init();
+document.getElementById("HomePage").onclick = function() {
+	window.location.href = "https://supersaiyajinstackz.github.io/";
+};
 
 /* Würfel Roll checks. */
 document.getElementById("RollDice").onclick = function() {
