@@ -13,34 +13,43 @@
 
 <body>
 	<main>
-		<button id="HomePage">Go to SuperSaiyajinStackZ's Homepage</button> <!-- Gehe zur Hauptseite. -->
+		<!-- Gehe zur Hauptseite. -->
+		<button id="HomePage">Go to SuperSaiyajinStackZ's Homepage</button>
+
 		<!-- Spiel Vorbereitung. -->
 		<div id="GamePrepare">
-			<div id="UIStyle">
-				<img id="LudoBanner" src="assets/images/banner.png">
-				<table>
-					<tr>
-						<td><button id="GameStart">Start Game!</button></td>
-					</tr>
-					<tr>
-						<td><label for="PlayerAmount">Player Amount: </label><input type="number" min="2" max="4" id="PlayerAmount" value="2"></td>
-					</tr>
-					<tr>
-						<td><label for="FigurAmount">Figure Amount: </label><input type="number" min="1" max="4" id="FigurAmount" value="1"></td>
-					</tr>
-					<tr>
-						<td><h2 id="LoadingText" class="showNone">Preparing your game...</h2></td>
-					</tr>
-				</table>
+			 <!-- Informations box. -->
+			<div id="InfoBox">
+				<button id="InfoBoxBtn">Hide Information box</button>
+				<h3>Copyright (C) 2020 by SuperSaiyajinStackZ. You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a></h3> <!-- Copyright Notiz. -->
+				<p>This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.</p>
 
-				<p>Copyright (C) 2020 SuperSaiyajinStackZ. You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a></p> <!-- Copyright Notiz. -->
+				<h3>Features including:</h3>
+				<p>* Fully Functional gameplay.</p>
+
+				<h3>Planned things:</h3>
+				<p>* Improvements of the graphics. Possibly higher resolution.</p>
+				<p>* Improvements of how the game works.</p>
+				<p>* An optional computer opponent.</p>
+			</div>
+
+			<div id="UIStyle">
+				<img id="LudoBanner" src="assets/images/banner.png" alt="LudoJS Game Banner">
+				<br></br>
+				<button id="GameStart">Start Game!</button>
+				<br></br>
+				<label for="PlayerAmount">Player Amount: </label><input type="number" min="2" max="4" id="PlayerAmount" value="2">
+				<br></br>
+				<label for="FigurAmount">Figure Amount: </label><input type="number" min="1" max="4" id="FigurAmount" value="1">
+				<br></br>
+				<h2 id="LoadingText" class="showNone">Preparing your game...</h2>
 			</div>
 		</div>
 
 		<!-- Spiel Geschehen. -->
 		<div id="GamePlay" class="showNone">
 			<canvas id="GameField" width="210" height="210"></canvas>
-			<label for="CurrentPlayer">Current Player: </label><b id="CurrentPlayer"></b>
+			Current Player: <b id="CurrentPlayer"></b>
 			<canvas id="Dice" width="80" height="80" class="d-none"></canvas>
 
 			<!-- Würfel Rollen Button. -->
@@ -50,9 +59,9 @@
 
 			<!-- Figuren Selektion. -->
 			<div id="FigureSelection" class="showNone">
-				<button id="PreviousFigur">Previous Figur</button>
-				<button id="PlayFigur">Play Figur</button>
-				<button id="NextFigur">Next Figur</button>
+				<button id="PreviousFigur">Previous Figure</button>
+				<button id="PlayFigur">Play Figure</button>
+				<button id="NextFigur">Next Figure</button>
 			</div>
 		</div>
 	</main>

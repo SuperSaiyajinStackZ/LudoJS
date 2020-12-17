@@ -1,0 +1,21 @@
+/* Zeige nichts an. */
+.showNone {
+  display: none;
+}
+
+/* UI Style. */
+#UIStyle {
+  background-color: RGBA(140, 80, 30, 255);
+  color: black;
+}
+
+/* Spielfeld. */
+#GamePlay {
+  background-color: RGBA(140, 80, 30, 255);
+}
+
+/* Informations box. */
+#InfoBox {
+  background-color: saddlebrown;
+  color: black;
+}

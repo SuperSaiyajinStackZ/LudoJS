@@ -34,6 +34,10 @@ document.getElementById("HomePage").onclick = function() {
 	window.location.href = "https://supersaiyajinstackz.github.io/";
 };
 
+document.getElementById("InfoBoxBtn").onclick = function() {
+	document.getElementById("InfoBox").classList.add("showNone");
+};
+
 /* Würfel Roll checks. */
 document.getElementById("RollDice").onclick = function() {
 	Game.SetErgebnis(CoreHelper_RollDice()); // Roll den Würfel.

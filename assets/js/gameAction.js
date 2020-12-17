@@ -78,7 +78,7 @@ export function GameAction_GetFirstAvlFigur(Game) {
 export function GameAction_Play(Game) {
 	const position = Game.GetPosition(Game.GetCurrentPlayer(), Game.GetSelectedFigur());
 
-	/* 0 --> Auf Feld 1, falls das Ergebnis() eine 6 war, ansonsten ungültig. */
+	/* 0 --> Auf Feld 1, falls das Ergebnis eine 6 war, ansonsten ungültig. */
 	if (position == 0) {
 		if (Game.GetErgebnis() == 6) {
 			if (!GameHelper_DoesOwnFigurBlock(Game, Game.GetCurrentPlayer(), Game.GetSelectedFigur(), 1)) {
