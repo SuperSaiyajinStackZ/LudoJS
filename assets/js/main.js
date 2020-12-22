@@ -29,11 +29,13 @@ import { CoreHelper_RefreshField, CoreHelper_RollDice, ClearDice, InitGraphics }
 import { LudoGame } from './core/game.js';
 let Game, alreadyLoaded = false;
 
+/* Starte das Spiel. */
 document.getElementById("GameStart").onclick = () => Init();
-document.getElementById("HomePage").onclick = function() {
-	window.location.href = "https://supersaiyajinstackz.github.io/";
-};
 
+/* Gehe zur Hauptseite. */
+document.getElementById("HomePage").onclick = () => window.location.href = "https://supersaiyajinstackz.github.io/";
+
+/* Verstecke die Info box. */
 document.getElementById("InfoBoxBtn").onclick = function() {
 	document.getElementById("InfoBox").classList.add("showNone");
 };
@@ -149,4 +151,134 @@ function ResetGame() {
 	document.getElementById("GamePlay").classList.add("showNone");
 	document.getElementById("Dice").classList.add("showNone");
 	document.getElementById("CurrentPlayer").innerText = 1; // Spieler 1.
+};
+
+/*
+	------------------------------------
+			Speicherdaten.
+	------------------------------------
+*/
+
+/*
+	Speicher Struktur von Ludo3DS & LudoJS.
+*/
+const SavStruct = {
+	Current_Player: 0x0,
+	Player_Amount: 0x1,
+	Figur_Amount: 0x2,
+
+	Figur_Size: 0x2, // 0x0 -> Position, 0x1 -> ob fertig. 0x2 pro Figur.
+	Player_Size: 0x8, // Jeweils 4 Figuren, was 0x8 entspricht.
+
+	Player1: 0x3, // 0x3 - 0xA.
+	Player2: 0xB, // 0xB - 0x12.
+	Player3: 0x13, // 0x13 - 0x1A.
+	Player4: 0x1B, // 0x1B - 0x22.
+
+	DataSize: 0x23 // 0x23 --> 35 byte.
+};
+
+
+/* Importiere ein bereits gestartetes Spiel von Ludo3DS oder LudoJS. */
+document.getElementById("ImportGame").onclick = function() {
+	let input = document.createElement("input");
+	input.type = "file";
+	input.accept = ".dat";
+	input.click(); // Führe Datei-Selektion aus.
+
+	input.onchange = function(e) {
+		if (!e.target.files[0]) {
+			alert("No Gamedata file selected!");
+			return false;
+		}
+
+		let fileSize = e.target.files[0].size;
+
+		if (fileSize == SavStruct.DataSize) {
+			let reader = new FileReader();
+
+			reader.readAsArrayBuffer(e.target.files[0]);
+			reader.onload = function() {
+				let Data = new Uint8Array(this.result);
+
+				let PAmount, FAmount, CPlayer;
+				CPlayer = Data[SavStruct.Current_Player]; // Der Aktuelle Spieler.
+				PAmount = Data[SavStruct.Player_Amount]; // Spieler Anzahl.
+				FAmount = Data[SavStruct.Figur_Amount]; // Figuren Anzahl.
+
+				if ((PAmount > 4) || (PAmount <= 1)) PAmount = 2; // Setze zu 2, weil 1- / 5+ verboten ist.
+				if ((FAmount > 4) || (FAmount <= 0)) FAmount = 1; // Setze zu 1, weil 0 / 5+ verboten ist.
+				if (CPlayer > PAmount) CPlayer = PAmount;
+
+				Game = new LudoGame(PAmount, FAmount); // Erstelle ein Neues Spiel da wir die daten nun haben.
+
+				/* Der Spieler Teil. */
+				for (let player = 0; player < PAmount; player++) {
+					for (let figur = 0; figur < FAmount; figur++) {
+						/* Position. */
+						Game.SetPosition(player, figur, Data[SavStruct.Player1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)]);
+
+						/* Ziel. */
+						Game.SetDone(player, figur, Data[SavStruct.Player1 + 1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)]);
+					}
+				}
+
+				Game.SetCurrentPlayer(CPlayer);
+				InitGraphics();
+				document.getElementById("LoadingText").classList.remove("showNone");
+				if (!alreadyLoaded) setTimeout(LoadGame, 1000);
+				else LoadGame();
+			};
+
+		} else {
+			alert("The size of the game data is not 0x23 (35 byte)!");
+			return false;
+		}
+	};
+};
+
+/* Speichert das aktuelle Spiel zu einer Datei. Diese ist kompatibel mit Ludo3DS. */
+document.getElementById("ExportGame").onclick = function() {
+	let Data = new Uint8Array(SavStruct.DataSize);
+
+	Data[SavStruct.Current_Player] = Game.GetCurrentPlayer();
+	Data[SavStruct.Player_Amount] = Game.GetPlayerAmount();
+	Data[SavStruct.Figur_Amount] = Game.GetFigurAmount();
+
+	/* Der Spieler Teil. */
+	for (let player = 0; player < 4; player++) {
+		if (player < Game.GetPlayerAmount()) {
+
+			for (let figur = 0; figur < 4; figur++) {
+				if (figur < Game.GetFigurAmount()) {
+					/* Position. */
+					Data[SavStruct.Player1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)] = Game.GetPosition(player, figur);
+					/* Ziel. */
+					Data[SavStruct.Player1 + 1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)] = Game.GetDone(player, figur);
+
+				} else {
+					/* Position. */
+					Data[SavStruct.Player1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)] = 0;
+					/* Ziel. */
+					Data[SavStruct.Player1 + 1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)] = 0;
+				}
+			}
+
+		} else {
+			for (let figur = 0; figur < 4; figur++) {
+				/* Position. */
+				Data[SavStruct.Player1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)] = 0;
+				/* Ziel. */
+				Data[SavStruct.Player1 + 1 + (figur * SavStruct.Figur_Size) + (player * SavStruct.Player_Size)] = 0;
+			}
+		}
+	}
+
+	let blob = new Blob([Data], { type: "application/octet-stream" });
+	let a = document.createElement('a');
+	let url = window.URL.createObjectURL(blob);
+	a.href = url;
+	a.download = "GameData.dat";
+	a.click();
+	alert("If you want to use the data for Ludo3DS, place 'GameData.dat' to: 'sdmc:/3ds/Ludo3DS/' and load it from the sub menu.");
 };

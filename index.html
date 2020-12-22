@@ -22,10 +22,12 @@
 			<div id="InfoBox">
 				<button id="InfoBoxBtn">Hide Information box</button>
 				<h3>Copyright (C) 2020 by SuperSaiyajinStackZ. You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a></h3> <!-- Copyright Notiz. -->
-				This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.<br>
+				This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.<br>Version: v0.1.0
 
 				<h3>Features including:</h3>
 				* Fully Functional gameplay.<br>
+				* Ability to load an already started game from LudoJS or Ludo3DS.<br>
+				* Ability to save the current game to a file for later re-use. Can also be used for Ludo3DS.<br>
 
 				<h3>Planned things:</h3>
 				* Improvements of the graphics. Possibly higher resolution.<br>
@@ -38,6 +40,7 @@
 				<button id="GameStart">Start Game!</button><br>
 				<label for="PlayerAmount">Player Amount: </label><input type="number" min="2" max="4" id="PlayerAmount" value="2"><br>
 				<label for="FigurAmount">Figure Amount: </label><input type="number" min="1" max="4" id="FigurAmount" value="1"> <br>
+				<button id="ImportGame">Load Game from file</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
 				<h2 id="LoadingText" class="showNone">Preparing your game...</h2>
 			</div>
 		</div>
@@ -59,6 +62,8 @@
 				<button id="PlayFigur">Play Figure</button>
 				<button id="NextFigur">Next Figure</button>
 			</div>
+
+			<button id="ExportGame">Export GameData</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
 		</div>
 	</main>
 </body>

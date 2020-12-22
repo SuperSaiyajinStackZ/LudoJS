@@ -52,5 +52,5 @@ export class LudoPlayer {
 
 	/* Die Position. */
 	GetPosition(figur) { return this.position[Math.min(this.GetAmount() - 1, figur)]; };
-	SetPosition(figur, pos) { this.position[Math.min(this.GetAmount() - 1, figur)] = pos; };
+	SetPosition(figur, pos) { this.position[Math.min(this.GetAmount() - 1, figur)] = Math.min(44, pos); };
 };

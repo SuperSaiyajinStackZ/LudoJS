@@ -9,6 +9,11 @@ LudoJS' Core wurde geschrieben von [SuperSaiyajinStackZ](https://github.com/Supe
 
 Du kannst das Spiel [hier](https://supersaiyajinstackz.github.io/LudoJS/) testen.
 
+## Features
+- [x] Komplettes Funktionales Spiel.
+- [x] Importieren von Spieldaten von LudoJS, als auch von Ludo3DS.
+- [x] Exportieren von Spieldaten, welche ebenfalls mit Ludo3DS kompatibel sind.
+
 ## Core-Erklärung
 `assets/js/core/coreHelper.js`: Beinhaltet den Würfel und Grafik part.
 
