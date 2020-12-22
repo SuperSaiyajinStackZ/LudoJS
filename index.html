@@ -22,17 +22,17 @@
 			<div id="InfoBox">
 				<button id="InfoBoxBtn">Hide Information box</button>
 				<h3>Copyright (C) 2020 by SuperSaiyajinStackZ. You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a></h3> <!-- Copyright Notiz. -->
-				This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.<br>Version: v0.1.0
+				This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.<br>Version: v0.1.1
 
 				<h3>Features including:</h3>
 				* Fully Functional gameplay.<br>
 				* Ability to load an already started game from LudoJS or Ludo3DS.<br>
 				* Ability to save the current game to a file for later re-use. Can also be used for Ludo3DS.<br>
+				* An optional computer opponent.<br>
 
 				<h3>Planned things:</h3>
 				* Improvements of the graphics. Possibly higher resolution.<br>
 				* Improvements of how the game works.<br>
-				* An optional computer opponent.<br>
 			</div>
 
 			<div id="UIStyle">
@@ -40,8 +40,8 @@
 				<button id="GameStart">Start Game!</button><br>
 				<label for="PlayerAmount">Player Amount: </label><input type="number" min="2" max="4" id="PlayerAmount" value="2"><br>
 				<label for="FigurAmount">Figure Amount: </label><input type="number" min="1" max="4" id="FigurAmount" value="1"> <br>
+				<label for="EnableAI">Computer enabled: </label><input type="checkbox" id="EnableAI" value="0"><br>
 				<button id="ImportGame">Load Game from file</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
-				<h2 id="LoadingText" class="showNone">Preparing your game...</h2>
 			</div>
 		</div>
 
@@ -50,6 +50,11 @@
 			<canvas id="GameField" width="210" height="210"></canvas>
 			<canvas id="Dice" width="80" height="80" class="d-none"></canvas><br>
 			Current Player: <b id="CurrentPlayer"></b>
+
+			<!-- Computer Klick. -->
+			<div id="AIRound" class="showNone">
+				<button id="AIClick">Computer Play!</button>
+			</div>
 
 			<!-- Würfel Rollen Button. -->
 			<div id="DiceRoll">
@@ -63,7 +68,7 @@
 				<button id="NextFigur">Next Figure</button>
 			</div>
 
-			<button id="ExportGame">Export GameData</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
+			<br><button id="ExportGame">Export GameData</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
 		</div>
 	</main>
 </body>

@@ -24,10 +24,17 @@
 		  reasonable ways as different from the original version.
 */
 
+import { GameHelper_CanMove, GameHelper_CanKick } from './core/gameHelper.js';
 import { GameAction_GetFirstAvlFigur, GameAction_NextFigur, GameAction_PreviousFigur, GameAction_Play, GameAction_NextPHandle } from './gameAction.js';
 import { CoreHelper_RefreshField, CoreHelper_RollDice, ClearDice, InitGraphics } from './core/coreHelper.js';
 import { LudoGame } from './core/game.js';
-let Game, alreadyLoaded = false;
+let Game, UseAI = false;
+
+/* Initialisiere die Grafiken. */
+window.onload = () => InitGraphics();
+
+/* Computer checkbox. */
+document.getElementById("EnableAI").onclick = () => UseAI = document.getElementById("EnableAI").checked;
 
 /* Starte das Spiel. */
 document.getElementById("GameStart").onclick = () => Init();
@@ -47,10 +54,7 @@ document.getElementById("RollDice").onclick = function() {
 
 	if (Game.GetSelectedFigur() == -1) {
 		GameAction_NextPHandle(Game);
-		document.getElementById("CurrentPlayer").innerText = (Game.GetCurrentPlayer() + 1).toString();
-
-		document.getElementById("FigureSelection").classList.add("showNone");
-		document.getElementById("DiceRoll").classList.remove("showNone");
+		PlayerSwitchHandle();
 
 	} else {
 		document.getElementById("FigureSelection").classList.remove("showNone");
@@ -81,26 +85,22 @@ document.getElementById("PlayFigur").onclick = function() {
 
 			document.getElementById("FigureSelection").classList.add("showNone");
 			document.getElementById("DiceRoll").classList.remove("showNone");
-
 			return;
 		}
 
 		GameAction_NextPHandle(Game);
-
-		document.getElementById("CurrentPlayer").innerText = (Game.GetCurrentPlayer() + 1).toString();
-		document.getElementById("FigureSelection").classList.add("showNone");
-		document.getElementById("DiceRoll").classList.remove("showNone");
+		PlayerSwitchHandle();
 	}
 };
+
+document.getElementById("AIClick").onclick = () => AI_Handle();
 
 document.getElementById("NextFigur").onclick = function() {
 	GameAction_NextFigur(Game);
 	CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), true);
 };
 
-/*
-	Initialisiert das Spiel.
-*/
+/* Initialisiert das Spiel. */
 function Init() {
 	/* Überprüfe Spieler Anzahl. */
 	if (document.getElementById("PlayerAmount").value > 4 || document.getElementById("PlayerAmount").value <= 1) {
@@ -115,18 +115,13 @@ function Init() {
 	}
 
 	Game = new LudoGame(document.getElementById("PlayerAmount").value, document.getElementById("FigurAmount").value);
-
-	InitGraphics();
-	document.getElementById("LoadingText").classList.remove("showNone");
-	if (!alreadyLoaded) setTimeout(LoadGame, 1000); // Waiting 1 second to let graphics properly load.
-	else LoadGame(); // Else if already graphics loaded on first begin -> go directly in game.
+	LoadGame();
+	console.log(UseAI);
 };
 
-/*
-	Lade das Spiel.
-*/
+
+/* Lade das Spiel. */
 function LoadGame() {
-	if (!alreadyLoaded) document.getElementById("LoadingText").classList.add("showNone");
 	/* Verstecke Einstellungs screen und zeige spiel screen an. */
 	document.getElementById("GamePrepare").classList.add("showNone");
 	document.getElementById("GamePlay").classList.remove("showNone");
@@ -134,12 +129,9 @@ function LoadGame() {
 	ClearDice();
 	document.getElementById("CurrentPlayer").innerText = 1; // Spieler 1.
 	CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), false);
-	alreadyLoaded = true;
 };
 
-/*
-	Setzt das Spiel zurück und kehrt zum Haupt-Menü zurück.
-*/
+/* Setzt das Spiel zurück und kehrt zum Haupt-Menü zurück. */
 function ResetGame() {
 	Game = undefined; // Bereinige das Spiel.
 
@@ -150,7 +142,82 @@ function ResetGame() {
 	document.getElementById("GamePrepare").classList.remove("showNone");
 	document.getElementById("GamePlay").classList.add("showNone");
 	document.getElementById("Dice").classList.add("showNone");
+	document.getElementById("AIRound").classList.add("showNone");
 	document.getElementById("CurrentPlayer").innerText = 1; // Spieler 1.
+};
+
+/* AI / Computer Handle. */
+function AI_Handle() {
+	Game.SetErgebnis(CoreHelper_RollDice());
+	let canMove = false, res = -1;
+
+	for (let figur = 0; figur < Game.GetFigurAmount(); figur++) {
+		if (GameHelper_CanMove(Game, Game.GetCurrentPlayer(), figur, Game.GetErgebnis())) {
+			/* Fokussiert aufs kicken. ;P */
+			if (GameHelper_CanKick(Game, Game.GetCurrentPlayer(), figur)) {
+				Game.SetSelectedFigur(figur);
+				canMove = true;
+				break;
+
+			} else {
+				res = figur;
+			}
+		}
+	}
+
+	if (!canMove) {
+		if (res != -1) {
+			Game.SetSelectedFigur(res);
+			canMove = true;
+		}
+	}
+
+	if (canMove) {
+		if (GameAction_Play(Game)) {
+			CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), false);
+
+			let dones = 0;
+			for (let i = 0; i < Game.GetFigurAmount(); i++) {
+				if (Game.GetDone(Game.GetCurrentPlayer(), i)) dones++;
+			}
+
+			/* Falls alle am Ziel sind -> Fertig! */
+			if (dones == Game.GetFigurAmount()) {
+				alert("Player " + (Game.GetCurrentPlayer() + 1).toString() + " won!");
+				ResetGame();
+
+				document.getElementById("FigureSelection").classList.add("showNone");
+				document.getElementById("DiceRoll").classList.remove("showNone");
+				return;
+			}
+		}
+	}
+
+	GameAction_NextPHandle(Game);
+	PlayerSwitchHandle();
+};
+
+/* Handle den wechsel für den Spieler. */
+function PlayerSwitchHandle() {
+	if (UseAI) {
+		if (Game.GetCurrentPlayer() != 0) {
+			document.getElementById("CurrentPlayer").innerText = (Game.GetCurrentPlayer() + 1).toString();
+			document.getElementById("FigureSelection").classList.add("showNone");
+			document.getElementById("DiceRoll").classList.add("showNone");
+			document.getElementById("AIRound").classList.remove("showNone");
+
+		} else {
+			document.getElementById("CurrentPlayer").innerText = (Game.GetCurrentPlayer() + 1).toString();
+			document.getElementById("FigureSelection").classList.add("showNone");
+			document.getElementById("AIRound").classList.add("showNone");
+			document.getElementById("DiceRoll").classList.remove("showNone");
+		}
+
+	} else {
+		document.getElementById("CurrentPlayer").innerText = (Game.GetCurrentPlayer() + 1).toString();
+		document.getElementById("FigureSelection").classList.add("showNone");
+		document.getElementById("DiceRoll").classList.remove("showNone");
+	}
 };
 
 /*
@@ -224,10 +291,7 @@ document.getElementById("ImportGame").onclick = function() {
 				}
 
 				Game.SetCurrentPlayer(CPlayer);
-				InitGraphics();
-				document.getElementById("LoadingText").classList.remove("showNone");
-				if (!alreadyLoaded) setTimeout(LoadGame, 1000);
-				else LoadGame();
+				LoadGame();
 			};
 
 		} else {

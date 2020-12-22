@@ -13,6 +13,7 @@ Du kannst das Spiel [hier](https://supersaiyajinstackz.github.io/LudoJS/) testen
 - [x] Komplettes Funktionales Spiel.
 - [x] Importieren von Spieldaten von LudoJS, als auch von Ludo3DS.
 - [x] Exportieren von Spieldaten, welche ebenfalls mit Ludo3DS kompatibel sind.
+- [x] Ein Optionaler Computer Gegner.
 
 ## Core-Erklärung
 `assets/js/core/coreHelper.js`: Beinhaltet den Würfel und Grafik part.

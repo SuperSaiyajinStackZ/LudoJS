@@ -27,7 +27,8 @@
 import { LudoGame } from './game.js';
 import { GameHelper_PositionConvert } from './gameHelper.js';
 
-let Haus, Fields, MainField, Chips, selector, Dices, initialized = false;
+let Haus, Fields, MainField, Chips, selector, Dices;
+export let initialized = false;
 
 /*
 	Initialisiere die Grafiken damit sie nicht noch einmal geladen werden müssen.
