@@ -31,7 +31,9 @@ import { LudoGame } from './core/game.js';
 let Game, UseAI = false;
 
 /* Initialisiere die Grafiken. */
-window.onload = () => InitGraphics();
+window.onload = function() {
+	InitGraphics();
+};
 
 /* Computer checkbox. */
 document.getElementById("EnableAI").onclick = () => UseAI = document.getElementById("EnableAI").checked;
@@ -116,7 +118,6 @@ function Init() {
 
 	Game = new LudoGame(document.getElementById("PlayerAmount").value, document.getElementById("FigurAmount").value);
 	LoadGame();
-	console.log(UseAI);
 };
 
 

@@ -1,5 +1,5 @@
 # LudoJS
-![](https://github.com/SuperSaiyajinStackZ/LudoJS/blob/main/assets/images/banner.png)
+![](https://github.com/SuperSaiyajinStackZ/LudoJS/blob/main/resources/banner.png)
 
 Ein Port von [Ludo3DS](https://github.com/SuperSaiyajinStackZ/Ludo3DS) zu Javascript, HTML und CSS!
 
