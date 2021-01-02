@@ -20,61 +20,122 @@
 
 <body>
 	<main>
-		<!-- Gehe zur Hauptseite. -->
-		<button id="HomePage">Go to SuperSaiyajinStackZ's Homepage</button>
+		<div class="container">
+			<!-- Gehe zur Hauptseite. -->
+			<button id="HomePage" class="MainButton">Go to SuperSaiyajinStackZ's Homepage</button>
+		</div>
 
 		<!-- Spiel Vorbereitung. -->
 		<div id="GamePrepare">
 			 <!-- Informations box. -->
-			<div id="InfoBox">
-				<button id="InfoBoxBtn">Hide Information box</button>
-				<h3>Copyright (C) 2020 by SuperSaiyajinStackZ. You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a></h3> <!-- Copyright Notiz. -->
-				This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.<br>Version: v0.1.1
+			 <div class="container">
+				<div id="InfoBox">
+					<button id="InfoBoxBtn" class="MainButton">Hide Information box</button>
 
-				<h3>Features including:</h3>
-				* Fully Functional gameplay.<br>
-				* Ability to load an already started game from LudoJS or Ludo3DS.<br>
-				* Ability to save the current game to a file for later re-use. Can also be used for Ludo3DS.<br>
-				* An optional computer opponent.<br>
+					<!-- Copyright Notiz. -->
+					<div id="Copyright_Notice" class="container">
+						Copyright (C) 2020 - 2021 by SuperSaiyajinStackZ.<br>You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a>
+					</div>
 
-				<h3>Planned things:</h3>
-				* Improvements of the graphics. Possibly higher resolution.<br>
-				* Improvements of how the game works.<br>
+					<div id="Info_Description" class="container">
+						This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.
+						<br>Version: v0.2.0
+					</div>
+
+					<div id="Info_Features" class="container">
+						<h3>Features including:</h3>
+						* Fully functional gameplay.<br>
+						* Ability to load an already started game from LudoJS or Ludo3DS.<br>
+						* Ability to save the current game to a file for later re-use. Can also be used for Ludo3DS.<br>
+						* An optional computer opponent.<br>
+					</div>
+
+					<div id="Info_Planned" class="container">
+						<h3>Planned things:</h3>
+						* Currently Nothing.<br>
+					</div>
+				</div>
 			</div>
 
-			<div id="UIStyle">
-				<button id="GameStart">Start Game!</button><br>
-				<label for="PlayerAmount">Player Amount: </label><input type="number" min="2" max="4" id="PlayerAmount" value="2"><br>
-				<label for="FigurAmount">Figure Amount: </label><input type="number" min="1" max="4" id="FigurAmount" value="1"> <br>
-				<label for="EnableAI">Computer enabled: </label><input type="checkbox" id="EnableAI" value="0"><br>
-				<button id="ImportGame">Load Game from file</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
+			<div class="container">
+				<div id="UIStyle">
+					<button id="GameStart" class="MainButton">Start Game!</button><br>
+
+					<div class="container">
+						<div class="row">
+							<div class="col">
+								Player Amount:
+							</div>
+							<div class="col">
+								<input type="number" min="2" max="4" id="PlayerAmount" value="2">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								Figure Amount:
+							</div>
+							<div class="col">
+								<input type="number" min="1" max="4" id="FigurAmount" value="1">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								Computer enabled:
+							</div>
+							<div class="col">
+								<input type="checkbox" id="EnableAI" value="0">
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
 		<!-- Spiel Geschehen. -->
-		<div id="GamePlay" class="showNone">
-			<canvas id="GameField" width="210" height="210"></canvas>
-			<canvas id="Dice" width="80" height="80" class="d-none"></canvas><br>
-			Current Player: <b id="CurrentPlayer"></b>
+		<div class="container">
+			<div id="GamePlay" class="showNone">
 
-			<!-- Computer Klick. -->
-			<div id="AIRound" class="showNone">
-				<button id="AIClick">Computer Play!</button>
+				<div class="container"><br>
+					<div class="row">
+
+						<div class="col">
+							<canvas id="GameField" width="210" height="210"></canvas>
+						</div>
+
+						<div class="col">
+							<br><br><br><canvas id="Dice" width="80" height="80" class="showNone"></canvas>
+						</div>
+					</div>
+				</div>
+
+				<div class="container">
+					Current Player: <b id="CurrentPlayer">
+				</div>
+
+				<!-- Computer Klick. -->
+				<div id="AIRound" class="showNone">
+					<button id="AIClick" class="ButtonP1">Computer Play!</button>
+				</div>
+
+				<!-- Würfel Rollen Button. -->
+				<div id="DiceRoll">
+					<button id="RollDice" class="ButtonP1">Roll Dice!</button>
+				</div>
+
+				<!-- Figuren Selektion. -->
+
+				<div id="FigureSelection" class="showNone">
+					<button id="PreviousFigur" class="ButtonP1">Previous Figure</button>
+					<button id="PlayFigur" class="ButtonP1">Play Figure</button>
+					<button id="NextFigur" class="ButtonP1">Next Figure</button>
+				</div>
 			</div>
 
-			<!-- Würfel Rollen Button. -->
-			<div id="DiceRoll">
-				<button id="RollDice">Roll Dice!</button>
-			</div>
-
-			<!-- Figuren Selektion. -->
-			<div id="FigureSelection" class="showNone">
-				<button id="PreviousFigur">Previous Figure</button>
-				<button id="PlayFigur">Play Figure</button>
-				<button id="NextFigur">Next Figure</button>
-			</div>
-
-			<br><button id="ExportGame">Export GameData</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
+			<!-- Außerhalb des Spiel-Screen Hintergrundes, um es ein bisschen besser aussehen zu lassen. -->
+			<button id="ImportGame" class="MainButton">Import Game</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
+			<button id="ExportGame" type="button" class="MainButton">Export GameData</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
 		</div>
 	</main>
 </body>

@@ -33,6 +33,7 @@ let Game, UseAI = false;
 /* Initialisiere die Grafiken. */
 window.onload = function() {
 	InitGraphics();
+	document.getElementById("ExportGame").classList.add("showNone");
 };
 
 /* Computer checkbox. */
@@ -124,11 +125,12 @@ function Init() {
 /* Lade das Spiel. */
 function LoadGame() {
 	/* Verstecke Einstellungs screen und zeige spiel screen an. */
+	document.getElementById("ExportGame").classList.remove("showNone");
 	document.getElementById("GamePrepare").classList.add("showNone");
 	document.getElementById("GamePlay").classList.remove("showNone");
 	document.getElementById("Dice").classList.remove("showNone");
 	ClearDice();
-	document.getElementById("CurrentPlayer").innerText = 1; // Spieler 1.
+	document.getElementById("CurrentPlayer").innerText = Game.GetCurrentPlayer() + 1; // + 1 weil 0.
 	CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), false);
 };
 
@@ -145,6 +147,15 @@ function ResetGame() {
 	document.getElementById("Dice").classList.add("showNone");
 	document.getElementById("AIRound").classList.add("showNone");
 	document.getElementById("CurrentPlayer").innerText = 1; // Spieler 1.
+	document.getElementById("ExportGame").classList.add("showNone");
+
+	/* Setze die Schaltflächen Farbe zurück zu Rot. */
+	document.getElementById("RollDice").className = "ButtonP1";
+	document.getElementById("PreviousFigur").className = "ButtonP1";
+	document.getElementById("PlayFigur").className = "ButtonP1";
+	document.getElementById("NextFigur").className = "ButtonP1";
+	document.getElementById("AIClick").className = "ButtonP1";
+	document.getElementById("RollDice").className = "ButtonP1";
 };
 
 /* AI / Computer Handle. */
@@ -200,6 +211,8 @@ function AI_Handle() {
 
 /* Handle den wechsel für den Spieler. */
 function PlayerSwitchHandle() {
+	SwitchBTNColor();
+
 	if (UseAI) {
 		if (Game.GetCurrentPlayer() != 0) {
 			document.getElementById("CurrentPlayer").innerText = (Game.GetCurrentPlayer() + 1).toString();
@@ -293,6 +306,7 @@ document.getElementById("ImportGame").onclick = function() {
 
 				Game.SetCurrentPlayer(CPlayer);
 				LoadGame();
+				SwitchBTNColor();
 			};
 
 		} else {
@@ -346,4 +360,41 @@ document.getElementById("ExportGame").onclick = function() {
 	a.download = "GameData.dat";
 	a.click();
 	alert("If you want to use the data for Ludo3DS, place 'GameData.dat' to: 'sdmc:/3ds/Ludo3DS/' and load it from the sub menu.");
+};
+
+/*
+	Wiedergebe die Button Farbe.
+
+	p: Der Spieler.
+*/
+function GetColor(p) {
+	switch(p) {
+		case 0:
+			return "ButtonP1";
+
+		case 1:
+			return "ButtonP2";
+
+		case 2:
+			return "ButtonP3";
+
+		case 3:
+			return "ButtonP4";
+	}
+
+	return "ButtonP1";
+};
+
+
+
+/*
+	Schaltflächen Farben Änderung.
+*/
+function SwitchBTNColor() {
+	document.getElementById("RollDice").className = GetColor(Game.GetCurrentPlayer());
+	document.getElementById("PreviousFigur").className = GetColor(Game.GetCurrentPlayer());
+	document.getElementById("PlayFigur").className = GetColor(Game.GetCurrentPlayer());
+	document.getElementById("NextFigur").className = GetColor(Game.GetCurrentPlayer());
+	document.getElementById("AIClick").className = GetColor(Game.GetCurrentPlayer());
+	document.getElementById("RollDice").className = GetColor(Game.GetCurrentPlayer());
 };
