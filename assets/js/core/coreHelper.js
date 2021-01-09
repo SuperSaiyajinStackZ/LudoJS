@@ -33,8 +33,8 @@ export let initialized = false;
 /* Wechsel die Sprache. */
 document.getElementById("SwitchLang").onclick = function() {
 	console.log(document.documentElement.lang);
-	if (document.documentElement.lang == "en") window.location.href = "/de";
-	else window.location.href = "/en";
+	if (document.documentElement.lang == "en") window.location.href = "de";
+	else window.location.href = "en";
 }
 
 /* Initialisiere die Grafiken damit sie nicht noch einmal geladen werden müssen. */
