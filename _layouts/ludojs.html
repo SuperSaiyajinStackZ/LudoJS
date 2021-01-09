@@ -1,69 +1,71 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang={{ page.lang }}>
 <head>
 	<meta charset='utf-8'>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,maximum-scale=2">
-	<title>LudoJS - SuperSaiyajinStackZ</title>
+	<title>LudoJS</title>
 
 	<!-- Stylesheets. -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="/assets/css/main.css">
 
 	<!-- JavaScript. -->
-	<script type="module" src="assets/js/core/game.js"></script>
-	<script type="module" src="assets/js/core/coreHelper.js"></script>
-	<script type="module" src="assets/js/main.js"></script>
+	<script type="module" src="/assets/js/core/game.js"></script>
+	<script type="module" src="/assets/js/core/coreHelper.js"></script>
+	<script type="module" src="/assets/js/main.js"></script>
 </head>
 
 <body>
 	<main>
 		<div class="container">
-			<!-- Gehe zur Hauptseite. -->
-			<button id="HomePage" class="MainButton">Go to SuperSaiyajinStackZ's Homepage</button>
+			<!-- Gehe zur Hauptseite und Sprachen-Wechsel. -->
+			<button id="HomePage" class="MainButton">{{ site.data[page.lang].HOME }}</button>
+			<button id="SwitchLang" class="MainButton">{{ site.data[page.lang].SWITCH_LANG }}</button>
 		</div>
 
 		<!-- Spiel Vorbereitung. -->
 		<div id="GamePrepare">
-			 <!-- Informations box. -->
-			 <div class="container">
-				<div id="InfoBox">
-					<button id="InfoBoxBtn" class="MainButton">Hide Information box</button>
+			<!-- Informations box. -->
+			<div class="container">
+			    <div id="InfoBox">
+				    <button id="InfoBoxBtn" class="MainButton">{{ site.data[page.lang].HIDE_INFO_BOX }}</button>
 
 					<!-- Copyright Notiz. -->
 					<div id="Copyright_Notice" class="container">
-						Copyright (C) 2020 - 2021 by SuperSaiyajinStackZ.<br>You can find the source code <a href="https://github.com/SuperSaiyajinStackZ/LudoJS">here.</a>
+						{{ site.data[page.lang].COPYRIGHT }}<br>
+						{{ site.data[page.lang].SOURCE_FIND }}
 					</div>
 
 					<div id="Info_Description" class="container">
-						This is a <a href="https://github.com/SuperSaiyajinStackZ/Ludo3DS">Ludo3DS</a> port to JS, HTML and CSS.
-						<br>Version: v0.2.0
+						{{ site.data[page.lang].DESCRIPTION }}
+						<br> {{ site.data[page.lang].VERSION }}
 					</div>
 
 					<div id="Info_Features" class="container">
-						<h3>Features including:</h3>
-						* Fully functional gameplay.<br>
-						* Ability to load an already started game from LudoJS or Ludo3DS.<br>
-						* Ability to save the current game to a file for later re-use. Can also be used for Ludo3DS.<br>
-						* An optional computer opponent.<br>
+						<h3>{{ site.data[page.lang].FEATURES_INCLUDING }}</h3>
+						{{ site.data[page.lang].FEATURE_1 }}<br>
+						{{ site.data[page.lang].FEATURE_2 }}<br>
+						{{ site.data[page.lang].FEATURE_3 }}<br>
+						{{ site.data[page.lang].FEATURE_4 }}<br>
 					</div>
 
 					<div id="Info_Planned" class="container">
-						<h3>Planned things:</h3>
-						* Currently Nothing.<br>
+						<h3>{{ site.data[page.lang].PLANNED_THINGS }}</h3>
+						{{ site.data[page.lang].PLANNED_1 }}<br>
 					</div>
 				</div>
 			</div>
 
 			<div class="container">
 				<div id="UIStyle">
-					<button id="GameStart" class="MainButton">Start Game!</button><br>
+					<button id="GameStart" class="MainButton">{{ site.data[page.lang].START_GAME }}</button><br>
 
 					<div class="container">
 						<div class="row">
 							<div class="col">
-								Player Amount:
+								{{ site.data[page.lang].PLAYER_AMOUNT }}
 							</div>
 							<div class="col">
 								<input type="number" min="2" max="4" id="PlayerAmount" value="2">
@@ -72,7 +74,7 @@
 
 						<div class="row">
 							<div class="col">
-								Figure Amount:
+								{{ site.data[page.lang].FIGURE_AMOUNT }}
 							</div>
 							<div class="col">
 								<input type="number" min="1" max="4" id="FigurAmount" value="1">
@@ -81,12 +83,13 @@
 
 						<div class="row">
 							<div class="col">
-								Computer enabled:
+								{{ site.data[page.lang].COMPUTER_ENABLED }}
 							</div>
 							<div class="col">
 								<input type="checkbox" id="EnableAI" value="0">
 							</div>
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -95,7 +98,6 @@
 		<!-- Spiel Geschehen. -->
 		<div class="container">
 			<div id="GamePlay" class="showNone">
-
 				<div class="container"><br>
 					<div class="row">
 
@@ -110,32 +112,33 @@
 				</div>
 
 				<div class="container">
-					Current Player: <b id="CurrentPlayer">
+					{{ site.data[page.lang].CURRENT_PLAYER }} <b id="CurrentPlayer">
 				</div>
 
 				<!-- Computer Klick. -->
 				<div id="AIRound" class="showNone">
-					<button id="AIClick" class="ButtonP1">Computer Play!</button>
+					<button id="AIClick" class="ButtonP1">{{ site.data[page.lang].COMPUTER_PLAY }}</button>
 				</div>
 
 				<!-- Würfel Rollen Button. -->
 				<div id="DiceRoll">
-					<button id="RollDice" class="ButtonP1">Roll Dice!</button>
+					<button id="RollDice" class="ButtonP1">{{ site.data[page.lang].ROLL_DICE }}</button>
 				</div>
 
 				<!-- Figuren Selektion. -->
-
 				<div id="FigureSelection" class="showNone">
-					<button id="PreviousFigur" class="ButtonP1">Previous Figure</button>
-					<button id="PlayFigur" class="ButtonP1">Play Figure</button>
-					<button id="NextFigur" class="ButtonP1">Next Figure</button>
+					<button id="PreviousFigur" class="ButtonP1">{{ site.data[page.lang].PREV_FIGURE }}</button>
+					<button id="PlayFigur" class="ButtonP1">{{ site.data[page.lang].PLAY_FIGURE }}</button>
+					<button id="NextFigur" class="ButtonP1">{{ site.data[page.lang].NEXT_FIGURE }}</button>
 				</div>
 			</div>
 
 			<!-- Außerhalb des Spiel-Screen Hintergrundes, um es ein bisschen besser aussehen zu lassen. -->
-			<button id="ImportGame" class="MainButton">Import Game</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
-			<button id="ExportGame" class="MainButton">Export Game</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
+			<button id="ImportGame" class="MainButton">{{ site.data[page.lang].IMPORT_GAME }}</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
+			<button id="ExportGame" class="MainButton">{{ site.data[page.lang].EXPORT_GAME }}</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
 		</div>
+
+
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>

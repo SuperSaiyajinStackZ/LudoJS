@@ -1,15 +1,9 @@
-/*
-	Zeige nichts an.
-*/
+/* Zeige nichts an. */
 .showNone {
 	display: none;
 }
 
-/*
-	Schaltflächen Stil.
-
-	Dies sollte den Ludo3DS Schaltflächen Stil ähneln.
-*/
+/* Schaltflächen Stil. Dies sollte den Ludo3DS Schaltflächen Stil ähneln. */
 .MainButton {
 	border-left-color: #023884;
 	border-top-color: #7E6800;
@@ -21,9 +15,7 @@
 	color: #D5D5D5;
 }
 
-/*
-	Spieler Schaltflächen.
-*/
+/* Spieler Schaltflächen. */
 .ButtonP1 {
 	border-color: #A10000;
 	border-width: 5px;
@@ -53,49 +45,37 @@
 	color: #D5D5D5;
 }
 
-/*
-	Haupt Benutzer-Oberflächen Stil.
-*/
+/* Haupt Benutzer-Oberflächen Stil. */
 #UIStyle {
 	background-color: #622E03;
 	color: #D5D5D5;
 }
 
-/*
-	Spielfeld.
-*/
+/* Spielfeld. */
 #GamePlay {
 	background-color: #622E03;
 	color: #D5D5D5;
 }
 
-/*
-	Copyright-Notiz.
-*/
+/* Copyright-Notiz. */
 #Copyright_Notice {
 	background-color: #B44403;
 	color: #FFFFFF;
 }
 
-/*
-	Beschreibungs-Information.
-*/
+/* Beschreibungs-Information. */
 #Info_Description {
 	background-color: #A13C01;
 	color: #FFFFFF;
 }
 
-/*
-	Feature-Liste.
-*/
+/* Feature-Liste. */
 #Info_Features {
 	background-color: #8B3301;
 	color: #FFFFFF;
 }
 
-/*
-	Geplannte Dinge.
-*/
+/* Geplannte Dinge. */
 #Info_Planned {
 	background-color: #752B00;
 	color: #FFFFFF;

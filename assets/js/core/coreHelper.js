@@ -30,9 +30,14 @@ import { GameHelper_PositionConvert } from './gameHelper.js';
 let Haus, Fields, MainField, Chips, selector, Dices;
 export let initialized = false;
 
-/*
-	Initialisiere die Grafiken damit sie nicht noch einmal geladen werden müssen.
-*/
+/* Wechsel die Sprache. */
+document.getElementById("SwitchLang").onclick = function() {
+	console.log(document.documentElement.lang);
+	if (document.documentElement.lang == "en") window.location.href = "/de";
+	else window.location.href = "/en";
+}
+
+/* Initialisiere die Grafiken damit sie nicht noch einmal geladen werden müssen. */
 export function InitGraphics() {
 	if (!initialized) {
 		Haus = new Array(4);
@@ -47,7 +52,6 @@ export function InitGraphics() {
 
 			Haus[i] = new Image(76, 76);
 			Haus[i].src = "assets/images/houses/home_" + (i + 1).toString() + ".png";
-
 			Fields[i] = new Image(94, 37);
 			Fields[i].src = "assets/images/fields/fields_" + (i + 1).toString() + ".png";
 		}
@@ -68,9 +72,7 @@ export function InitGraphics() {
 	}
 };
 
-/*
-	Würfel den Würfel.
-*/
+/* Rolle den Würfel. */
 export function CoreHelper_RollDice() {
 	let val = Math.floor(Math.random() * 6) + 1;
 	DrawDice(val - 1); // - 1, weil array startet ab NULL.
@@ -89,9 +91,7 @@ function DrawDice(res) {
 	drawContext.drawImage(Dices[res], 0, 0);
 };
 
-/*
-	Reinigt den Würfel.
-*/
+/* Reinigt den Würfel. */
 export function ClearDice() {
 	const element = document.getElementById("Dice");
 	const drawContext = element.getContext('2d');
