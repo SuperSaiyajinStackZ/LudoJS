@@ -83,7 +83,8 @@ document.getElementById("PlayFigur").onclick = function() {
 
 		/* Falls alle am Ziel sind -> Fertig! */
 		if (dones == Game.GetFigurAmount()) {
-			alert("Player " + (Game.GetCurrentPlayer() + 1).toString() + " won!");
+			let v = "player_" + (Game.GetCurrentPlayer() + 1) + "_won";
+			alert(document.getElementById("STRINGS").dataset.v);
 			ResetGame();
 
 			document.getElementById("FigureSelection").classList.add("showNone");
@@ -107,13 +108,13 @@ document.getElementById("NextFigur").onclick = function() {
 function Init() {
 	/* Überprüfe Spieler Anzahl. */
 	if (document.getElementById("PlayerAmount").value > 4 || document.getElementById("PlayerAmount").value <= 1) {
-		alert("The min amount for the Players is: 2!\nThe max amount for the Players is: 4!");
+		alert(document.getElementById("STRINGS").dataset.player_amount_warn);
 		return;
 	}
 
 	/* Überprüfe Figuren Anzahl. */
 	if (document.getElementById("FigurAmount").value > 4 || document.getElementById("FigurAmount").value <= 0) {
-		alert("The min amount for the Figures is: 1!\nThe max amount for the Figures is: 4!");
+		alert(document.getElementById("STRINGS").dataset.figure_amount_warn);
 		return;
 	}
 
@@ -195,7 +196,8 @@ function AI_Handle() {
 
 			/* Falls alle am Ziel sind -> Fertig! */
 			if (dones == Game.GetFigurAmount()) {
-				alert("Player " + (Game.GetCurrentPlayer() + 1).toString() + " won!");
+				let v = "player_" + (Game.GetCurrentPlayer() + 1) + "_won";
+				alert(document.getElementById("STRINGS").dataset.v);
 				ResetGame();
 
 				document.getElementById("FigureSelection").classList.add("showNone");
@@ -269,7 +271,7 @@ document.getElementById("ImportGame").onclick = function() {
 
 	input.onchange = function(e) {
 		if (!e.target.files[0]) {
-			alert("No Gamedata file selected!");
+			alert(document.getElementById("STRINGS").dataset.gamedata_not_selected);
 			return false;
 		}
 
@@ -310,7 +312,7 @@ document.getElementById("ImportGame").onclick = function() {
 			};
 
 		} else {
-			alert("The size of the game data is not 0x23 (35 byte)!");
+			alert(document.getElementById("STRINGS").dataset.gamedata_invalid);
 			return false;
 		}
 	};
@@ -359,7 +361,7 @@ document.getElementById("ExportGame").onclick = function() {
 	a.href = url;
 	a.download = "GameData.dat";
 	a.click();
-	alert("If you want to use the data for Ludo3DS, place 'GameData.dat' to: 'sdmc:/3ds/Ludo3DS/' and load it from the sub menu.");
+	alert(document.getElementById("STRINGS").dataset.export_game_msg);
 };
 
 /*
