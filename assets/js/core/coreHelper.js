@@ -299,3 +299,18 @@ export function CoreHelper_DrawSelection(Game, selection, drawContext) {
 			EingangField[(player * 4) + (position - 41)][0], EingangField[(player * 4) + (position - 41)][1]);
 	}
 };
+
+/* Touch Handling für die Figuren. */
+export function CoreHelper_GetFigurTouchIndex(Game, player, figur) {
+	const position = Game.GetPosition(player, figur);
+
+	/* 0 und 41+ haben eine spezielle handlung für die Touch Position. */
+	if (position == 0) return [ PlayerField[(player * 4) + figur][0], PlayerField[(player * 4) + figur][1], 19, 19 ];
+
+	/* Feld Handling. */
+	if (position > 0 && position < 41) return [ MainFieldPos[GameHelper_PositionConvert(player, position) - 1][0], MainFieldPos[GameHelper_PositionConvert(player, position) - 1][1], 19, 19 ];
+
+	if (position > 40) return [ EingangField[(player * 4) + (position - 41)][0], EingangField[(player * 4) + (position - 41)][1], 19, 19 ];
+
+	return [ 0,  0,  0,  0 ];
+};

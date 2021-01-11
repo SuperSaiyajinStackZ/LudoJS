@@ -26,8 +26,9 @@
 
 import { GameHelper_CanMove, GameHelper_CanKick } from './core/gameHelper.js';
 import { GameAction_GetFirstAvlFigur, GameAction_NextFigur, GameAction_PreviousFigur, GameAction_Play, GameAction_NextPHandle } from './gameAction.js';
-import { CoreHelper_RefreshField, CoreHelper_RollDice, ClearDice, InitGraphics } from './core/coreHelper.js';
+import { CoreHelper_RefreshField, CoreHelper_RollDice, ClearDice, InitGraphics, CoreHelper_GetFigurTouchIndex } from './core/coreHelper.js';
 import { LudoGame } from './core/game.js';
+import { touching } from './utils.js';
 let Game, UseAI = false;
 
 /* Initialisiere die Grafiken. */
@@ -65,6 +66,49 @@ document.getElementById("RollDice").onclick = function() {
 		CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), true);
 	}
 };
+
+/*
+	Eine Alternative Steuerung für die Figuren. Anstatt auf "Figur Spielen" zu drücken,
+	kann Sie direkt ausgewählt werden!
+*/
+document.getElementById("GameField").onclick = function(e) {
+	if (!document.getElementById("PlayFigur").classList.contains("showNone")) {
+
+		for (let i = 0; i < Game.GetFigurAmount(); i++) {
+			const Pos = CoreHelper_GetFigurTouchIndex(Game, Game.GetCurrentPlayer(), i);
+
+			if (touching(Pos[0], Pos[1], Pos[2], Pos[3], e)) {
+				Game.SetSelectedFigur(i);
+
+				if (GameAction_Play(Game)) {
+					CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), false);
+
+					let dones = 0;
+					for (let i = 0; i < Game.GetFigurAmount(); i++) {
+						if (Game.GetDone(Game.GetCurrentPlayer(), i)) dones++;
+					}
+
+					/* Falls alle am Ziel sind -> Fertig! */
+					if (dones == Game.GetFigurAmount()) {
+						let v = "player_" + (Game.GetCurrentPlayer() + 1) + "_won";
+						alert(document.getElementById("STRINGS").dataset.v);
+						ResetGame();
+
+						document.getElementById("FigureSelection").classList.add("showNone");
+						document.getElementById("DiceRoll").classList.remove("showNone");
+						return;
+					}
+
+					GameAction_NextPHandle(Game);
+					PlayerSwitchHandle();
+
+					break;
+				}
+			}
+		}
+	}
+};
+
 
 /* Figuren-wechsel. */
 document.getElementById("PreviousFigur").onclick = function() {
