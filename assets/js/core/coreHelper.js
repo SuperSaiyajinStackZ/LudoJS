@@ -43,7 +43,7 @@ export function InitGraphics() {
 		Haus = new Array(4);
 		Fields = new Array(4);
 		Chips = new Array(4);
-		Dices = new Array(6);
+		Dices = new Array(7);
 
 		/* Initialisiere Chips, Häuser und Felder. */
 		for (let i = 0; i < 4; i++) {
@@ -57,9 +57,9 @@ export function InitGraphics() {
 		}
 
 		/* Initialisiere die Würfel. */
-		for (let i = 0; i < 6; i++) {
+		for (let i = 0; i < 7; i++) {
 			Dices[i] = new Image(80, 80);
-			Dices[i].src = "assets/images/dices/dice_" + (i + 1).toString() + ".png";
+			Dices[i].src = "assets/images/dices/dice_" + (i).toString() + ".png";
 		}
 
 		MainField = new Image(210, 210);
@@ -75,7 +75,7 @@ export function InitGraphics() {
 /* Rolle den Würfel. */
 export function CoreHelper_RollDice() {
 	let val = Math.floor(Math.random() * 6) + 1;
-	DrawDice(val - 1); // - 1, weil array startet ab NULL.
+	DrawDice(val);
 	return val;
 };
 
@@ -95,7 +95,7 @@ function DrawDice(res) {
 export function ClearDice() {
 	const element = document.getElementById("Dice");
 	const drawContext = element.getContext('2d');
-	drawContext.clearRect(0, 0, element.width, element.height);
+	drawContext.drawImage(Dices[0], 0, 0);
 };
 
 

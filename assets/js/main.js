@@ -52,6 +52,27 @@ document.getElementById("InfoBoxBtn").onclick = function() {
 };
 
 /* Würfel Roll checks. */
+document.getElementById("Dice").onclick = function() {
+	if (!document.getElementById("DiceRoll").classList.contains("showNone")) {
+		Game.SetErgebnis(CoreHelper_RollDice()); // Roll den Würfel.
+		GameAction_GetFirstAvlFigur(Game);
+
+		if (Game.GetSelectedFigur() == -1) {
+			GameAction_NextPHandle(Game);
+			PlayerSwitchHandle();
+
+		} else {
+			document.getElementById("FigureSelection").classList.remove("showNone");
+			document.getElementById("DiceRoll").classList.add("showNone");
+			CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), true);
+		}
+
+	} else if (!document.getElementById("AIRound").classList.contains("showNone")) {
+		AI_Handle();
+	}
+};
+
+/* Würfel Roll checks. */
 document.getElementById("RollDice").onclick = function() {
 	Game.SetErgebnis(CoreHelper_RollDice()); // Roll den Würfel.
 	GameAction_GetFirstAvlFigur(Game);
@@ -68,11 +89,11 @@ document.getElementById("RollDice").onclick = function() {
 };
 
 /*
-	Eine Alternative Steuerung für die Figuren. Anstatt auf "Figur Spielen" zu drücken,
-	kann Sie direkt ausgewählt werden!
+	Eine Alternative Steuerung für die Figuren.
+	Anstatt auf "Figur Spielen" zu drücken, kann Sie direkt ausgewählt werden!
 */
 document.getElementById("GameField").onclick = function(e) {
-	if (!document.getElementById("PlayFigur").classList.contains("showNone")) {
+	if (!document.getElementById("FigureSelection").classList.contains("showNone")) {
 
 		for (let i = 0; i < Game.GetFigurAmount(); i++) {
 			const Pos = CoreHelper_GetFigurTouchIndex(Game, Game.GetCurrentPlayer(), i);
