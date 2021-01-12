@@ -37,6 +37,27 @@ window.onload = function() {
 	document.getElementById("ExportGame").classList.add("showNone");
 };
 
+/* Zeige den Gewinner an. */
+function DisplayWinner() {
+	switch(Game.GetCurrentPlayer()) {
+		case 0:
+			alert(document.getElementById("STRINGS").dataset.player_1_won);
+			break;
+
+		case 1:
+			alert(document.getElementById("STRINGS").dataset.player_2_won);
+			break;
+
+		case 2:
+			alert(document.getElementById("STRINGS").dataset.player_3_won);
+			break;
+
+		case 3:
+			alert(document.getElementById("STRINGS").dataset.player_4_won);
+			break;
+	}
+};
+
 /* Computer checkbox. */
 document.getElementById("EnableAI").onclick = () => UseAI = document.getElementById("EnableAI").checked;
 
@@ -111,8 +132,7 @@ document.getElementById("GameField").onclick = function(e) {
 
 					/* Falls alle am Ziel sind -> Fertig! */
 					if (dones == Game.GetFigurAmount()) {
-						let v = "player_" + (Game.GetCurrentPlayer() + 1) + "_won";
-						alert(document.getElementById("STRINGS").dataset.v);
+						DisplayWinner();
 						ResetGame();
 
 						document.getElementById("FigureSelection").classList.add("showNone");
@@ -148,8 +168,7 @@ document.getElementById("PlayFigur").onclick = function() {
 
 		/* Falls alle am Ziel sind -> Fertig! */
 		if (dones == Game.GetFigurAmount()) {
-			let v = "player_" + (Game.GetCurrentPlayer() + 1) + "_won";
-			alert(document.getElementById("STRINGS").dataset.v);
+			DisplayWinner();
 			ResetGame();
 
 			document.getElementById("FigureSelection").classList.add("showNone");
@@ -261,8 +280,7 @@ function AI_Handle() {
 
 			/* Falls alle am Ziel sind -> Fertig! */
 			if (dones == Game.GetFigurAmount()) {
-				let v = "player_" + (Game.GetCurrentPlayer() + 1) + "_won";
-				alert(document.getElementById("STRINGS").dataset.v);
+				DisplayWinner();
 				ResetGame();
 
 				document.getElementById("FigureSelection").classList.add("showNone");
