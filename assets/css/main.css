@@ -3,6 +3,9 @@
 	display: none;
 }
 
+body { background-color: #A5A5A5; }
+ul { margin-bottom: 0; }
+
 /* Schaltflächen Stil. Dies sollte den Ludo3DS Schaltflächen Stil ähneln. */
 .MainButton {
 	border-left-color: #023884;
@@ -79,4 +82,15 @@
 #Info_Planned {
 	background-color: #752B00;
 	color: #FFFFFF;
+}
+
+/* Falls JavaScript nicht aktiviert ist. */
+#JS_WARN {
+	background-color: #DB2C00;
+	color: #D5D5D5;
+}
+
+/* Für Dark-Mode Benutzer -> Ein dunklerer Hintergrund. */
+@media only screen and (prefers-color-scheme: dark) {
+	body { background-color: #2E2E2E; }
 }

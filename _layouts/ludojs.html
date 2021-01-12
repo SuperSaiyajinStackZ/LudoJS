@@ -45,6 +45,12 @@
 			    <div id="InfoBox">
 				    <button id="InfoBoxBtn" class="MainButton">{{ site.data[page.lang].HIDE_INFO_BOX }}</button>
 
+					<noscript>
+						<div id="JS_WARN" class="container">
+							<b>{{ site.data[page.lang].JAVASCRIPT_WARN }}</b>
+						</div>
+					</noscript>
+
 					<!-- Copyright Notiz. -->
 					<div id="Copyright_Notice" class="container">
 						{{ site.data[page.lang].COPYRIGHT }}<br>
@@ -58,15 +64,19 @@
 
 					<div id="Info_Features" class="container">
 						<h3>{{ site.data[page.lang].FEATURES_INCLUDING }}</h3>
-						{{ site.data[page.lang].FEATURE_1 }}<br>
-						{{ site.data[page.lang].FEATURE_2 }}<br>
-						{{ site.data[page.lang].FEATURE_3 }}<br>
-						{{ site.data[page.lang].FEATURE_4 }}<br>
+						<ul>
+							<li>{{ site.data[page.lang].FEATURE_1 }}</li>
+							<li>{{ site.data[page.lang].FEATURE_2 }}</li>
+							<li>{{ site.data[page.lang].FEATURE_3 }}</li>
+							<li>{{ site.data[page.lang].FEATURE_4 }}</li>
+						</ul>
 					</div>
 
 					<div id="Info_Planned" class="container">
 						<h3>{{ site.data[page.lang].PLANNED_THINGS }}</h3>
-						{{ site.data[page.lang].PLANNED_1 }}<br>
+						<ul>
+							<li>{{ site.data[page.lang].PLANNED_1 }}</li>
+						</ul>
 					</div>
 				</div>
 			</div>
