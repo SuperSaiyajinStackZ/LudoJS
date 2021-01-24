@@ -24,7 +24,7 @@
 		  reasonable ways as different from the original version.
 */
 
-import { GameHelper_CanMove, GameHelper_CanKick } from './core/gameHelper.js';
+import { GameHelper_CanMove, GameHelper_CanKick, GameHelper_SetContinue } from './core/gameHelper.js';
 import { GameAction_GetFirstAvlFigur, GameAction_NextFigur, GameAction_PreviousFigur, GameAction_Play, GameAction_NextPHandle } from './gameAction.js';
 import { CoreHelper_RefreshField, CoreHelper_RollDice, ClearDice, InitGraphics, CoreHelper_GetFigurTouchIndex } from './core/coreHelper.js';
 import { LudoGame } from './core/game.js';
@@ -67,11 +67,6 @@ document.getElementById("GameStart").onclick = () => Init();
 /* Gehe zur Hauptseite. */
 document.getElementById("HomePage").onclick = () => window.location.href = "https://supersaiyajinstackz.github.io/";
 
-/* Verstecke die Info box. */
-document.getElementById("InfoBoxBtn").onclick = function() {
-	document.getElementById("InfoBox").classList.add("showNone");
-};
-
 /* Würfel Roll checks. */
 document.getElementById("Dice").onclick = function() {
 	if (!document.getElementById("DiceRoll").classList.contains("showNone")) {
@@ -79,6 +74,7 @@ document.getElementById("Dice").onclick = function() {
 		GameAction_GetFirstAvlFigur(Game);
 
 		if (Game.GetSelectedFigur() == -1) {
+			GameHelper_SetContinue(Game, Game.GetCurrentPlayer());
 			GameAction_NextPHandle(Game);
 			PlayerSwitchHandle();
 
@@ -99,6 +95,7 @@ document.getElementById("RollDice").onclick = function() {
 	GameAction_GetFirstAvlFigur(Game);
 
 	if (Game.GetSelectedFigur() == -1) {
+		GameHelper_SetContinue(Game, Game.GetCurrentPlayer());
 		GameAction_NextPHandle(Game);
 		PlayerSwitchHandle();
 
@@ -157,6 +154,7 @@ document.getElementById("PreviousFigur").onclick = function() {
 	CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), true);
 };
 
+/* Figuren Spiel. */
 document.getElementById("PlayFigur").onclick = function() {
 	if (GameAction_Play(Game)) {
 		CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), false);
@@ -181,8 +179,10 @@ document.getElementById("PlayFigur").onclick = function() {
 	}
 };
 
+/* Computer Klick. */
 document.getElementById("AIClick").onclick = () => AI_Handle();
 
+/* Nächste Figur. */
 document.getElementById("NextFigur").onclick = function() {
 	GameAction_NextFigur(Game);
 	CoreHelper_RefreshField(Game, Game.GetSelectedFigur(), true);
@@ -202,7 +202,13 @@ function Init() {
 		return;
 	}
 
-	Game = new LudoGame(document.getElementById("PlayerAmount").value, document.getElementById("FigurAmount").value);
+	/* Überprüfe Würfel-Rolls Anzahl. */
+	if (document.getElementById("DiceRolls").value > 3 || document.getElementById("DiceRolls").value <= 0) {
+		alert(document.getElementById("STRINGS").dataset.dice_roll_warning);
+		return;
+	}
+
+	Game = new LudoGame(document.getElementById("PlayerAmount").value, document.getElementById("FigurAmount").value, document.getElementById("DiceRolls").value);
 	LoadGame();
 };
 
@@ -210,6 +216,7 @@ function Init() {
 /* Lade das Spiel. */
 function LoadGame() {
 	/* Verstecke Einstellungs screen und zeige spiel screen an. */
+	document.getElementById("CreditsBox").classList.add("showNone");
 	document.getElementById("ExportGame").classList.remove("showNone");
 	document.getElementById("GamePrepare").classList.add("showNone");
 	document.getElementById("GamePlay").classList.remove("showNone");
@@ -264,7 +271,7 @@ function AI_Handle() {
 
 	if (!canMove) {
 		if (res != -1) {
-			Game.SetSelectedFigur(res);
+			GameAction_GetFirstAvlFigur(Game);
 			canMove = true;
 		}
 	}
@@ -288,6 +295,9 @@ function AI_Handle() {
 				return;
 			}
 		}
+
+	} else {
+		GameHelper_SetContinue(Game, Game.GetCurrentPlayer());
 	}
 
 	GameAction_NextPHandle(Game);
@@ -341,7 +351,9 @@ const SavStruct = {
 	Player3: 0x13, // 0x13 - 0x1A.
 	Player4: 0x1B, // 0x1B - 0x22.
 
-	DataSize: 0x23 // 0x23 --> 35 byte.
+	Dice_Rolls: 0x23,
+	Avl_Dice_Rolls: 0x24,
+	DataSize: 0x25 // 0x25 --> 37 byte.
 };
 
 
@@ -389,6 +401,8 @@ document.getElementById("ImportGame").onclick = function() {
 					}
 				}
 
+				Game.SetDiceRolls(Data[SavStruct.Dice_Rolls]);
+				Game.SetAVLDiceRolls(Data[SavStruct.Avl_Dice_Rolls]);
 				Game.SetCurrentPlayer(CPlayer);
 				LoadGame();
 				SwitchBTNColor();
@@ -437,6 +451,9 @@ document.getElementById("ExportGame").onclick = function() {
 			}
 		}
 	}
+
+	Data[SavStruct.Dice_Rolls] = Game.GetDiceRolls();
+	Data[SavStruct.Avl_Dice_Rolls] = Game.GetAVLDiceRolls();
 
 	let blob = new Blob([Data], { type: "application/octet-stream" });
 	let a = document.createElement('a');

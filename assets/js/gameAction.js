@@ -27,9 +27,7 @@
 import { LudoGame } from './core/game.js';
 import { GameHelper_CanMove, GameHelper_DoesOwnFigurBlock, GameHelper_MarkAsDone, GameHelper_AdditionalDoneCheck, GameHelper_KickAction } from './core/gameHelper.js';
 
-/*
-	Gehe zur nächsten Figur, falls verfügbar.
-*/
+/* Gehe zur nächsten Figur, falls verfügbar. */
 export function GameAction_NextFigur(Game) {
 	if (Game.GetSelectedFigur() == Game.GetFigurAmount() - 1) return; // Bereits an der letzten Figur.
 
@@ -41,9 +39,7 @@ export function GameAction_NextFigur(Game) {
 	}
 };
 
-/*
-	Gehe zur vorherigen Figur, falls verfügbar.
-*/
+/* Gehe zur vorherigen Figur, falls verfügbar. */
 export function GameAction_PreviousFigur(Game) {
 	if (Game.GetSelectedFigur() == 0) return; // Bereits an der ersten figur.
 
@@ -55,9 +51,7 @@ export function GameAction_PreviousFigur(Game) {
 	}
 };
 
-/*
-	Gehe zur ersten verfügbaren Figur-Selektion.
-*/
+/* Gehe zur ersten verfügbaren Figur-Selektion. */
 export function GameAction_GetFirstAvlFigur(Game) {
 	for (let cFigur = 0; cFigur < Game.GetFigurAmount(); cFigur++) {
 		if (GameHelper_CanMove(Game, Game.GetCurrentPlayer(), cFigur, Game.GetErgebnis())) {
@@ -125,9 +119,7 @@ export function GameAction_Play(Game) {
 	}
 };
 
-/*
-	Nächster Spieler Handle.
-*/
+/* Nächster Spieler Handle. */
 export function GameAction_NextPHandle(Game) {
 	/* Setze Werte zurück für den nächsten Zug. */
 	Game.SetErgebnis(0);
@@ -140,9 +132,10 @@ export function GameAction_NextPHandle(Game) {
 
 	if (Game.GetCurrentPlayer() < Game.GetPlayerAmount() - 1) {
 		Game.SetCurrentPlayer(Game.GetCurrentPlayer() + 1);
-		return;
 
 	} else {
 		Game.SetCurrentPlayer(0);
 	}
+
+	Game.SetAVLDiceRolls(Game.GetDiceRolls()); // Setze standard Würfel-Rolls.
 };

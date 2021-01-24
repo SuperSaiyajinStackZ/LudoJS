@@ -1,0 +1,44 @@
+<!-- Die Spiel-Einstellungen von LudoJS. -->
+<div class="container">
+	<div id="UIStyle">
+		<button id="GameStart" class="MainButton">{{ site.data[page.lang].START_GAME }}</button><br>
+
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					{{ site.data[page.lang].PLAYER_AMOUNT }}
+				</div>
+				<div class="col">
+					<input type="number" min="2" max="4" id="PlayerAmount" value="2">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					{{ site.data[page.lang].FIGURE_AMOUNT }}
+				</div>
+				<div class="col">
+					<input type="number" min="1" max="4" id="FigurAmount" value="1">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					{{ site.data[page.lang].COMPUTER_ENABLED }}
+				</div>
+				<div class="col">
+					<input type="checkbox" id="EnableAI" value="0">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					{{ site.data[page.lang].DICE_ROLLS }}
+				</div>
+				<div class="col">
+					<input type="number" min="1" max="3" id="DiceRolls" value="1">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

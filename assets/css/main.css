@@ -3,7 +3,10 @@
 	display: none;
 }
 
-body { background-color: #A5A5A5; }
+body {
+	background-color: #A5A5A5;
+	font-variant-east-asian: jis04;
+}
 ul { margin-bottom: 0; }
 
 /* Schaltflächen Stil. Dies sollte den Ludo3DS Schaltflächen Stil ähneln. */
@@ -48,6 +51,26 @@ ul { margin-bottom: 0; }
 	color: #D5D5D5;
 }
 
+.LangBtn {
+	border-left-color: #023884;
+	border-top-color: #7E6800;
+	border-right-color: #008548;
+	border-bottom-color: #A10000;
+	border-width: 3px;
+	background-color: #727272;
+	text-align: center;
+	color: #D5D5D5;
+}
+
+#Select_Lang {
+	text-align: center;
+	color: #D5D5D5;
+}
+
+#LangSelector {
+	background-color: #622E03;
+}
+
 /* Haupt Benutzer-Oberflächen Stil. */
 #UIStyle {
 	background-color: #622E03;
@@ -88,6 +111,11 @@ ul { margin-bottom: 0; }
 #JS_WARN {
 	background-color: #DB2C00;
 	color: #D5D5D5;
+}
+
+#CreditsBox {
+	background-color: #752B00;
+	color: #FFFFFF;
 }
 
 /* Für Dark-Mode Benutzer -> Ein dunklerer Hintergrund. */

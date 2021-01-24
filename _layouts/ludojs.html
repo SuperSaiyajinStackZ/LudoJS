@@ -15,153 +15,36 @@
 	<script type="module" src="assets/js/core/game.js"></script>
 	<script type="module" src="assets/js/core/coreHelper.js"></script>
 	<script type="module" src="assets/js/main.js"></script>
+	<script type="module" src="assets/js/langHandler.js"></script>
 </head>
 
 <body>
 	<main>
-		<!-- Benötigt, damit auf die Strings in JavaScript zugegriffen werden kann. -->
-		<div id="STRINGS"
-			data-export_game_msg="{{ site.data[page.lang].EXPORT_GAME_MSG }}"
-			data-player_amount_warn="{{ site.data[page.lang].PLAYER_AMOUNT_WARN }}"
-			data-figure_amount_warn="{{ site.data[page.lang].FIGURE_AMOUNT_WARN }}"
-			data-player_1_won="{{ site.data[page.lang].PLAYER_1_WON }}"
-			data-player_2_won="{{ site.data[page.lang].PLAYER_2_WON }}"
-			data-player_3_won="{{ site.data[page.lang].PLAYER_3_WON }}"
-			data-player_4_won="{{ site.data[page.lang].PLAYER_4_WON }}"
-			data-gamedata_invalud="{{ site.data[page.lang].GAMEDATA_INVALID }}"
-			data-gamedata_not_selected="{{ site.data[page.lang].GAMEDATA_NOT_SELECTED }}">
-		</div>
-
+		{% include externalStrings.html %}
 		<div class="container">
 			<!-- Gehe zur Hauptseite und Sprachen-Wechsel. -->
 			<button id="HomePage" class="MainButton">{{ site.data[page.lang].HOME }}</button>
 			<button id="SwitchLang" class="MainButton">{{ site.data[page.lang].SWITCH_LANG }}</button>
 		</div>
 
+		{% include langSelection.html %}
+
 		<!-- Spiel Vorbereitung. -->
 		<div id="GamePrepare">
-			<!-- Informations box. -->
-			<div class="container">
-			    <div id="InfoBox">
-				    <button id="InfoBoxBtn" class="MainButton">{{ site.data[page.lang].HIDE_INFO_BOX }}</button>
-
-					<noscript>
-						<div id="JS_WARN" class="container">
-							<b>{{ site.data[page.lang].JAVASCRIPT_WARN }}</b>
-						</div>
-					</noscript>
-
-					<!-- Copyright Notiz. -->
-					<div id="Copyright_Notice" class="container">
-						{{ site.data[page.lang].COPYRIGHT }}<br>
-						{{ site.data[page.lang].SOURCE_FIND }}
-					</div>
-
-					<div id="Info_Description" class="container">
-						{{ site.data[page.lang].DESCRIPTION }}
-						<br> {{ site.data[page.lang].VERSION }}
-					</div>
-
-					<div id="Info_Features" class="container">
-						<h3>{{ site.data[page.lang].FEATURES_INCLUDING }}</h3>
-						<ul>
-							<li>{{ site.data[page.lang].FEATURE_1 }}</li>
-							<li>{{ site.data[page.lang].FEATURE_2 }}</li>
-							<li>{{ site.data[page.lang].FEATURE_3 }}</li>
-							<li>{{ site.data[page.lang].FEATURE_4 }}</li>
-						</ul>
-					</div>
-
-					<div id="Info_Planned" class="container">
-						<h3>{{ site.data[page.lang].PLANNED_THINGS }}</h3>
-						<ul>
-							<li>{{ site.data[page.lang].PLANNED_1 }}</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-
-			<div class="container">
-				<div id="UIStyle">
-					<button id="GameStart" class="MainButton">{{ site.data[page.lang].START_GAME }}</button><br>
-
-					<div class="container">
-						<div class="row">
-							<div class="col">
-								{{ site.data[page.lang].PLAYER_AMOUNT }}
-							</div>
-							<div class="col">
-								<input type="number" min="2" max="4" id="PlayerAmount" value="2">
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col">
-								{{ site.data[page.lang].FIGURE_AMOUNT }}
-							</div>
-							<div class="col">
-								<input type="number" min="1" max="4" id="FigurAmount" value="1">
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col">
-								{{ site.data[page.lang].COMPUTER_ENABLED }}
-							</div>
-							<div class="col">
-								<input type="checkbox" id="EnableAI" value="0">
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div>
+			{% include infoBox.html %}
+			{% include gameSettings.html %}
 		</div>
 
 		<!-- Spiel Geschehen. -->
 		<div class="container">
-			<div id="GamePlay" class="showNone">
-				<div class="container"><br>
-					<div class="row">
-
-						<div class="col">
-							<canvas id="GameField" width="210" height="210"></canvas>
-						</div>
-
-						<div class="col">
-							<br><br><br><canvas id="Dice" width="80" height="80" class="showNone"></canvas>
-						</div>
-					</div>
-				</div>
-
-				<div class="container">
-					{{ site.data[page.lang].CURRENT_PLAYER }} <b id="CurrentPlayer">
-				</div>
-
-				<!-- Computer Klick. -->
-				<div id="AIRound" class="showNone">
-					<button id="AIClick" class="ButtonP1">{{ site.data[page.lang].COMPUTER_PLAY }}</button>
-				</div>
-
-				<!-- Würfel Rollen Button. -->
-				<div id="DiceRoll">
-					<button id="RollDice" class="ButtonP1">{{ site.data[page.lang].ROLL_DICE }}</button>
-				</div>
-
-				<!-- Figuren Selektion. -->
-				<div id="FigureSelection" class="showNone">
-					<button id="PreviousFigur" class="ButtonP1">{{ site.data[page.lang].PREV_FIGURE }}</button>
-					<button id="PlayFigur" class="ButtonP1">{{ site.data[page.lang].PLAY_FIGURE }}</button>
-					<button id="NextFigur" class="ButtonP1">{{ site.data[page.lang].NEXT_FIGURE }}</button>
-				</div>
-			</div>
+			{% include gamePlay.html %}
 
 			<!-- Außerhalb des Spiel-Screen Hintergrundes, um es ein bisschen besser aussehen zu lassen. -->
 			<button id="ImportGame" class="MainButton">{{ site.data[page.lang].IMPORT_GAME }}</button> <!-- Um die Spieldaten von Ludo3DS als beispiel zu laden. -->
 			<button id="ExportGame" class="MainButton">{{ site.data[page.lang].EXPORT_GAME }}</button> <!-- Um die Spieldaten zu exportieren, um sie mit Ludo3DS als beispiel zu verwenden. -->
 		</div>
 
-
+		{% include credits.html %}
 	</main>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 </body>

@@ -443,3 +443,34 @@ export function GameHelper_AdditionalDoneCheck(game, player, figur) {
 
 	if (Position == 41) game.SetDone(player, figur, true); // Wir sind fertig.
 };
+
+/*
+	Dies ist dazu gedacht, um den Fortsetzungs-status zu setzen, falls man fortfahren kann.
+	Hauptsächlich für die Würfel-Züge.
+
+	game: Das aktuelle Spiel.
+	player: Der aktuelle Spieler.
+*/
+export function GameHelper_SetContinue(game, player) {
+	/* Sollte NICHT passieren, aber man weiss ja nie, LoL. */
+	if (game.GetAVLDiceRolls() == 0) {
+		game.SetCanContinue(false);
+		return;
+	}
+
+	game.SetAVLDiceRolls(game.GetAVLDiceRolls() - 1); // Reduziere um 1.
+
+	if (game.GetAVLDiceRolls() > 0) {
+		for (let fg = 0; fg < game.GetFigurAmount(); fg++) {
+			/* Überprüfe ob mindestens eine Figur außer Haus ist und noch nicht am Ziel ist. */
+			if (game.GetPosition(player, fg) > 0) {
+				if (!game.GetDone(player, fg)) {
+					game.SetCanContinue(false); // Da der aktuelle Spieler noch eine Figur draußen hat, die noch nicht am Ziel ist.
+					return;
+				}
+			}
+		}
+	}
+
+	game.SetCanContinue(game.GetAVLDiceRolls() > 0);
+}

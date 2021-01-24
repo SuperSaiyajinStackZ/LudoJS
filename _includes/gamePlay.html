@@ -1,0 +1,36 @@
+<!-- Das Spielgeschehen von LudoJS. -->
+<div id="GamePlay" class="showNone">
+	<div class="container"><br>
+		<div class="row">
+
+			<div class="col">
+				<canvas id="GameField" width="210" height="210"></canvas>
+			</div>
+
+			<div class="col">
+				<br><br><br><canvas id="Dice" width="80" height="80" class="showNone"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		{{ site.data[page.lang].CURRENT_PLAYER }} <b id="CurrentPlayer"></b>
+	</div>
+
+	<!-- Computer Klick. -->
+	<div id="AIRound" class="showNone">
+		<button id="AIClick" class="ButtonP1">{{ site.data[page.lang].COMPUTER_PLAY }}</button>
+	</div>
+
+	<!-- Würfel Rollen Button. -->
+	<div id="DiceRoll">
+		<button id="RollDice" class="ButtonP1">{{ site.data[page.lang].ROLL_DICE }}</button>
+	</div>
+
+	<!-- Figuren Selektion. -->
+	<div id="FigureSelection" class="showNone">
+		<button id="PreviousFigur" class="ButtonP1">{{ site.data[page.lang].PREV_FIGURE }}</button>
+		<button id="PlayFigur" class="ButtonP1">{{ site.data[page.lang].PLAY_FIGURE }}</button>
+		<button id="NextFigur" class="ButtonP1">{{ site.data[page.lang].NEXT_FIGURE }}</button>
+	</div>
+</div>

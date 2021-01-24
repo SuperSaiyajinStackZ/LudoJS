@@ -27,12 +27,14 @@
 import { LudoPlayer } from './player.js';
 
 export class LudoGame {
-	constructor(pNum, fNum) {
+	constructor(pNum, fNum, dRolls) {
 		this.pAmount = Math.min(4, pNum); // Spieler Anzahl.
 		this.CurrentPlayer = 0; // Aktueller Spieler, beginnend mit 0.
 		this.canContinue = false; // Kann Fortfahren -> Nein.
 		this.ergebnis = 0; // Das Würfel Ergebnis.
 		this.figur = 0; // Die ausgewählte Figur.
+		this.rolls = dRolls;
+		this.avlRolls = dRolls;
 		this.Players = new Array(); // Ein neuer Array für die Spieler.
 
 		/* Initialisiere Spieler. */
@@ -68,4 +70,12 @@ export class LudoGame {
 	/* Die ausgewählte Figur. */
 	GetSelectedFigur() { return this.figur; };
 	SetSelectedFigur(v) { this.figur = v; };
+
+	/* Die Würfel Rolls. */
+	GetDiceRolls() { return this.rolls; };
+	SetDiceRolls(v) { this.rolls = v; };
+
+	/* Verfügbare Würfel Rolls. */
+	GetAVLDiceRolls() { return this.avlRolls; };
+	SetAVLDiceRolls(v) { this.avlRolls = v; };
 };
